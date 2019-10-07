@@ -1,0 +1,21 @@
+@import '~sass/colors.scss';
+@import '~sass/fonts.scss';
+
+.header {
+  display: flex;
+  justify-content: left;
+  margin: 1.5rem 0.1rem;
+  align-items: center;
+}
+
+.logo {
+  height: 9rem;
+  width: 9rem;
+}
+
+.title {
+  @include NotoSansHK-Regular;
+
+  font-size: 3.2em;
+  color: $teal;
+}

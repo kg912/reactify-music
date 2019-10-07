@@ -1,0 +1,11 @@
+$font: 'Noto Sans HK', sans-serif;
+
+@mixin NotoSansHK-Regular {
+  font-family: $font;
+  font-weight: 400;
+}
+
+@mixin NotoSansHK-Bold {
+  font-family: $font;
+  font-weight: 700;
+}

@@ -1,0 +1,20 @@
+@import '~sass/colors.scss';
+@import '~sass/mixins.scss';
+@import '~sass/fonts.scss';
+
+.sidebar-container {
+  @include box-shadow;
+  @include rounded-elm(1.5rem);
+
+  width: 25%;
+  height: 96vh;
+  background-color: $reactify-medium-gray;
+  overflow: hidden;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem;
+  height: 100%;
+}

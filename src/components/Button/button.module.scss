@@ -1,0 +1,51 @@
+@import '~sass/colors';
+@import '~sass/fonts';
+@import '~sass/mixins';
+
+.btn {
+  @include rounded-elm(0.8rem);
+  @include display-flex;
+
+  text-transform: capitalize;
+  padding: 0.7rem 4rem;
+  transition: all 0.2s;
+  font-size: 1.6rem;
+  background-color: $reactify-alt-gray;
+  color: $teal;
+  border: 0.1rem solid $teal;
+  outline: none;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba($black, 0.2); /* x, y, blur color */
+    background-color: $teal;
+    color: $black;
+
+    &::after {
+      transform: scaleX(1.4) scaleY(1.6);
+      opacity: 0;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba($black, 0.2); /* x, y, blur color */
+  }
+
+  &.animated {
+    animation: moveInUp 0.5s ease-out 0.75s;
+    animation-fill-mode: backwards; /* start animation from the beginning */
+  }
+
+  &::after {
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    transition: all 0.4s;
+  }
+
+  &:focus {
+    background-color: $teal;
+    color: $black;
+  }
+}

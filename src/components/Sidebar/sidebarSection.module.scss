@@ -1,0 +1,26 @@
+@import '~sass/colors.scss';
+@import '~sass/fonts.scss';
+
+.section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  @include NotoSansHK-Bold;
+
+  display: flex;
+  justify-content: left;
+  font-size: 1.7em;
+  color: $teal;
+  text-transform: uppercase;
+  margin: 0.2rem;
+}
+
+.section-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  margin: 0.5rem;
+}

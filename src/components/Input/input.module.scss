@@ -1,0 +1,64 @@
+@import '~sass/mixins.scss';
+@import '~sass/colors.scss';
+@import '~sass/fonts.scss';
+
+@mixin onFocus {
+  background-color: $teal;
+
+  & ion-icon {
+    color: $black;
+  }
+
+  & input {
+    background-color: $reactify-alt-gray;
+
+    color: $white;
+
+    &::placeholder {
+      color: $white;
+    }
+  }
+}
+
+.input-container {
+  @include rounded-elm(0.8rem);
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: $reactify-alt-gray;
+  width: 35rem;
+  height: 4.5rem;
+
+  &:hover {
+    border: 0.1rem solid $teal;
+  }
+
+  &:focus-within {
+    @include onFocus;
+  }
+
+  & ion-icon {
+    font-size: 2.4rem;
+    margin-right: 0.2rem;
+
+    color: $teal;
+  }
+
+  & input {
+    @include rounded-elm(2.5rem);
+
+    width: 89%;
+    height: 75%;
+    z-index: 10;
+    padding: 1.7rem;
+    border: none;
+    font-size: 1.5em;
+    background-color: $reactify-light-gray;
+    margin-right: 0.6rem;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+@import './colors.scss';
+
+@mixin box-shadow {
+  box-shadow: 0 30px 20px 10px rgba(0, 0, 0, 0.3);
+}
+
+@mixin display-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin rounded-elm($radius) {
+  border-radius: $radius;
+}
+
+@mixin reactify-elm {
+  @include rounded-elm(1.5rem);
+  @include box-shadow;
+
+  background-color: $reactify-medium-gray;
+}

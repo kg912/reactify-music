@@ -1,0 +1,38 @@
+@import '~sass/colors.scss';
+@import '~sass/mixins.scss';
+
+.page-container {
+  @include display-flex;
+
+  color: $white;
+  height: 100vh;
+}
+
+.login-container {
+  @include reactify-elm;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 60rem;
+  height: 40rem;
+  transform: translateY(-5rem);
+}
+
+.login-header {
+  transform: translateX(-1.2rem);
+}
+
+.input {
+  margin-bottom: 2.5rem;
+}
+
+.buttons {
+  @include display-flex;
+  width: 100%;
+  padding: 0 14rem;
+  margin: 1.5rem 0;
+
+  justify-content: space-evenly;
+}
