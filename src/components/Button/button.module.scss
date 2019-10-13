@@ -2,7 +2,7 @@
 @import '~sass/fonts';
 @import '~sass/mixins';
 
-.btn {
+@mixin btn-gen($color) {
   @include rounded-elm(0.8rem);
   @include display-flex;
 
@@ -10,15 +10,23 @@
   padding: 0.7rem 4rem;
   transition: all 0.2s;
   font-size: 1.6rem;
-  background-color: $reactify-alt-gray;
-  color: $teal;
-  border: 0.1rem solid $teal;
+  color: $color;
   outline: none;
+
+  &.transparent {
+    background: none;
+    border: 0.1rem solid $color;
+  }
+
+  &.colored {
+    background-color: $reactify-alt-gray;
+    border: none;
+  }
 
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba($black, 0.2); /* x, y, blur color */
-    background-color: $teal;
+    background-color: $color;
     color: $black;
 
     &::after {
@@ -43,4 +51,16 @@
     z-index: -1;
     transition: all 0.4s;
   }
+}
+
+.btn-teal {
+  @include btn-gen($teal);
+}
+
+.btn-purple {
+  @include btn-gen(lighten($purple, 10%));
+}
+
+.btn-red {
+  @include btn-gen($red);
 }

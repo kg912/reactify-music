@@ -1,12 +1,4 @@
-@import '~sass/colors.scss';
-@import '~sass/mixins.scss';
-
-.page-container {
-  @include display-flex;
-
-  color: $white;
-  height: 100vh;
-}
+@import '~sass/mixins';
 
 .login-container {
   @include reactify-elm;
@@ -14,6 +6,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: inherit;
+  overflow: hidden;
 
   width: 60rem;
   height: 40rem;
@@ -23,6 +17,11 @@
 .login-header {
   transform: translateX(-1.2rem);
   margin-bottom: 2.5rem;
+}
+
+.login-blur {
+  background: inherit;
+  z-index: -10px;
 }
 
 .input {

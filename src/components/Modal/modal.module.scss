@@ -1,0 +1,67 @@
+@import '~#/sass/colors.scss';
+@import '~#/sass/mixins.scss';
+@import '~#/sass/fonts.scss';
+
+@mixin modalText {
+  color: $white;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+@mixin flex {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.main-container {
+  @include flex;
+
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 30px 20px 10px rgba(0, 0, 0, 0.3);
+  flex: 1;
+  height: 100vh;
+  position: absolute;
+  width: 100vw;
+}
+
+.modal {
+  background-color: $reactify-medium-gray;
+  display: flex;
+  flex-direction: column;
+  height: 478px;
+  width: 1438px;
+}
+
+.title {
+  @include modalText;
+  @include flex;
+
+  color: $abc-white;
+  font-family: 'ABCSans-Black';
+  font-size: 54px;
+  height: 66px;
+  margin: 86px 84px 43px 84px;
+}
+
+.description {
+  @include NotoSansHK-Regular;
+  @include modalText;
+  @include flex;
+
+  font-size: 29px;
+  height: 52px;
+  margin: 0 84px;
+  margin-bottom: 74px;
+}
+
+.button-container {
+  @include flex;
+
+  width: 100%;
+}
+
+.modal-button {
+  margin: 0 17px;
+}

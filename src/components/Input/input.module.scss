@@ -2,8 +2,8 @@
 @import '~sass/colors.scss';
 @import '~sass/fonts.scss';
 
-@mixin onFocus {
-  background-color: $teal;
+@mixin onFocus($accent) {
+  background-color: $accent;
 
   & ion-icon {
     color: $black;
@@ -20,36 +20,41 @@
   }
 }
 
-.input-container {
+@mixin container($accent) {
   @include rounded-elm(0.8rem);
 
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  background-color: $reactify-alt-gray;
   width: 35rem;
   height: 4.5rem;
+  overflow: hidden;
 
-  &:hover {
-    border: 0.1rem solid $teal;
+  &.ghost {
+    background: none;
+    border: 0.1rem solid $accent;
+  }
+
+  &.colored {
+    background-color: $reactify-alt-gray;
   }
 
   &:focus-within {
-    @include onFocus;
+    @include onFocus($accent);
   }
 
   & ion-icon {
     font-size: 2.4rem;
     margin-right: 0.2rem;
 
-    color: $teal;
+    color: $accent;
   }
 
   & input {
     @include rounded-elm(2.5rem);
 
     width: 89%;
-    height: 75%;
+    height: 50%;
     z-index: 10;
     padding: 1.7rem;
     border: none;
@@ -61,4 +66,16 @@
       outline: none;
     }
   }
+}
+
+.input-container-teal {
+  @include container($teal);
+}
+
+.input-container-purple {
+  @include container(lighten($purple, 10%));
+}
+
+.input-container-red {
+  @include container($red);
 }

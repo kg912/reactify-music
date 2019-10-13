@@ -22,5 +22,6 @@ html {
 
 body {
   box-sizing: border-box;
+  z-index: -2;
   background-color: $reactify-gray;
 }

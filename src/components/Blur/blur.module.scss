@@ -1,0 +1,26 @@
+@import '~sass/mixins';
+
+.default {
+  @include rounded-elm(1.5rem);
+
+  background: inherit;
+  background-size: contain;
+  transform: scale(4.5);
+  z-index: -10;
+}
+
+.blur-minimal {
+  @include elm-blur(5px);
+}
+
+.blur-moderate {
+  @include elm-blur(10px);
+}
+
+.blur-adequate {
+  @include elm-blur(15px);
+}
+
+.blur-intense {
+  @include elm-blur(30px);
+}

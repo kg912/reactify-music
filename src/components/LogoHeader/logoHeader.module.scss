@@ -1,21 +1,33 @@
 @import '~sass/colors.scss';
 @import '~sass/fonts.scss';
 
+@mixin title($color) {
+  @include NotoSansHK-Regular;
+
+  font-size: 3.2em;
+  color: $color;
+}
+
 .header {
   display: flex;
   justify-content: left;
   margin: 1.5rem 0.1rem;
   align-items: center;
-}
 
-.logo {
-  height: 9rem;
-  width: 9rem;
-}
+  .logo {
+    height: 9rem;
+    width: 9rem;
+  }
 
-.title {
-  @include NotoSansHK-Regular;
+  .title-teal {
+    @include title($teal);
+  }
 
-  font-size: 3.2em;
-  color: $teal;
+  .title-purple {
+    @include title($purple);
+  }
+
+  .title-red {
+    @include title($red);
+  }
 }

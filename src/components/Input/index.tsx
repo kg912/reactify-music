@@ -1,43 +1,50 @@
 import React from 'react';
 import classnames from 'classnames';
+import { ACCENTS } from 'utils/constants';
 
 import { toCamelCase, noop } from 'helpers';
-
 import Icon from 'components/Icon';
 
-import inputStyles from './input.module.scss';
+import styles from './input.module.scss';
 
-interface Input {
+interface Props extends React.HTMLProps<HTMLInputElement> {
   icon: string;
-  value: string;
-  onChange: () => void;
+  accent?: string;
   className?: string;
   style?: React.CSSProperties;
-  placeholder?: string;
-  type?: string;
+  ghost?: boolean;
 }
 
-const styles = toCamelCase(inputStyles);
+const defaultProps: Readonly<Props> = {
+  accent: ACCENTS.TEAL,
+  onChange: noop,
+  icon: 'cog'
+};
 
-const Input: React.FC<Input> = ({
+const Input: React.FC<Props> = ({
+  accent,
   className = '',
   icon,
   style,
-  value = '',
-  onChange = noop,
-  type = '',
+  onChange,
+  ghost,
   ...rest
 }) => {
-  const classes = classnames(styles.inputContainer, {
-    [className]: !!className
+  const appearance = ghost ? styles.ghost : styles.colored;
+
+  const classes = classnames(styles[`input-container-${accent}`], {
+    [className]: !!className,
+    [appearance]: true
   });
 
   return (
     <div className={classes} style={style}>
       <Icon name={icon} />
-      <input defaultValue={value} onChange={onChange} type={type} {...rest} />
+      <input onChange={onChange} {...rest} />
     </div>
   );
 };
+
+Input.defaultProps = defaultProps;
 
 export default React.memo(Input);

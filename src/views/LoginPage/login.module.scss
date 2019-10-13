@@ -1,0 +1,11 @@
+@import '~sass/colors.scss';
+@import '~sass/mixins.scss';
+
+.page-container {
+  @include display-flex;
+
+  background: url('~static/background.jpg');
+  background-size: cover;
+  color: $white;
+  height: 100vh;
+}
