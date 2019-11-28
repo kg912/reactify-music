@@ -1,48 +1,54 @@
 import React from 'react';
-import classnames from 'classnames';
 
-import { ACCENTS } from 'utils/constants';
+import Icon from 'components/Icon';
 
-import { noop } from 'helpers';
+import { noop, joinArray } from 'helpers';
 
 import styles from './button.module.scss';
 
-const { transparent, colored } = styles;
+const { transparent, colored, rounded } = styles;
 
 interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   accent?: string;
   className?: string;
-  onClick: () => void;
+  onClick?: () => void;
   style?: React.CSSProperties;
   text?: string;
   ghost?: boolean;
+  isRounded?: boolean;
+  icon?: string;
 }
 
 const defaultProps: Readonly<ButtonProps> = {
-  accent: ACCENTS.PURPLE,
+  accent: 'purple',
   onClick: noop,
+  isRounded: false,
   text: ''
 };
 
 const Button: React.FC<ButtonProps> = ({
   accent = '',
   className = '',
+  isRounded,
   style,
   ghost,
   onClick,
-  text
+  text,
+  icon = 'cog',
+  ...rest
 }) => {
   const appearance = ghost ? transparent : colored;
+  const roundedClass = isRounded ? rounded : '';
 
-  const classes = classnames(styles[`btn-${accent}`], {
-    [className]: !!className,
-    [appearance]: true
-  });
+  const base = joinArray(styles[`btn-${accent}`], appearance, roundedClass);
 
   return (
-    <button className={classes} onClick={onClick} style={style}>
-      {text}
-    </button>
+    <div className={className}>
+      <button className={base} onClick={onClick} style={style}>
+        {icon && <Icon name={icon} />}
+        {text}
+      </button>
+    </div>
   );
 };
 

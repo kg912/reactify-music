@@ -1,12 +1,10 @@
 import { handleActions } from 'redux-actions';
 
-import { ACCENTS } from 'utils/constants';
-
 import { SettingState } from './types';
 import { SET_ACCENT } from './actions';
 
 const initialState: SettingState['state'] = {
-  accent: ACCENTS.TEAL
+  accent: 'teal'
 };
 
 const setAccent: SettingState['reducer'] = (_, action) => ({

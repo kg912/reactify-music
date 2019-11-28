@@ -1,7 +1,9 @@
 import { SettingState } from './settings/types';
+import { AuthState } from './auth/types';
 
 interface Modules {
   modules: {
+    auth: AuthState['state'];
     settings: SettingState['state'];
   };
 }

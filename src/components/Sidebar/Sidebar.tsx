@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { toCamelCase } from 'helpers';
+import { toCamelCaseObject } from 'helpers';
 
 import LogoHeader from 'components/LogoHeader';
 
@@ -13,7 +13,7 @@ interface Sidebar {
   className?: string;
 }
 
-const styles: { [s: string]: string } = toCamelCase(sidebarStyles);
+const styles: { [s: string]: string } = toCamelCaseObject(sidebarStyles);
 
 const list = [...Array(5).keys()].reduce(
   (acc: string[], curr: number): string[] => {

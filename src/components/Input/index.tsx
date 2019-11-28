@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import { ACCENTS } from 'utils/constants';
 
-import { toCamelCase, noop } from 'helpers';
+import { toCamelCaseObject, noop } from 'helpers';
 import Icon from 'components/Icon';
 
 import styles from './input.module.scss';

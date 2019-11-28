@@ -73,7 +73,7 @@
 }
 
 .input-container-purple {
-  @include container(lighten($purple, 10%));
+  @include container($purple);
 }
 
 .input-container-red {

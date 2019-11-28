@@ -1,9 +1,9 @@
 import React from 'react';
-import { toCamelCase } from 'helpers';
+import { toCamelCaseObject } from 'helpers';
 
 import homeStyles from './home.module.scss';
 
-const styles = toCamelCase(homeStyles);
+const styles = toCamelCaseObject(homeStyles);
 
 const Home = () => (
   <div>

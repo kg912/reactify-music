@@ -1,39 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 import pageStyles from './loginform.module.scss';
-import { ACCENTS } from 'utils/constants';
-import { toCamelCase, noop } from 'helpers';
+import { ACCENTS, AccentType } from 'utils/constants';
+import { toCamelCaseObject, noop } from 'helpers';
 
+import LoginPanel from 'components/LoginPanel/LoginPanel';
 import LogoHeader from 'components/LogoHeader';
 import Input from 'components/Input';
 import Button from 'components/Button';
-import Blur from 'components/Blur';
 
-const styles = toCamelCase(pageStyles);
+const styles = toCamelCaseObject(pageStyles);
 
 interface Props {
-  accent?: string;
+  accent?: AccentType;
 }
 
 const defaultProps: Readonly<Props> = {
-  accent: ACCENTS.TEAL
+  accent: 'teal'
 };
 
-const LoginForm: React.FC<Props> = ({ accent }) => {
+const LoginForm: React.FC<Props> = ({ accent = 'teal' }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // @ts-ignore
-  const onPasswordChange = (e: FormEvent<HTMLInputElement>) =>
-    setPassword(e.target.value);
-
   return (
-    <div className={styles.loginContainer}>
-      <Blur type="minimal" />
+    <LoginPanel>
       <LogoHeader className={styles.loginHeader} accent={accent} />
       <Input
         ghost
+        value={email}
         className={styles.input}
         icon="contact"
+        onChange={({ currentTarget }: FormEvent<HTMLInputElement>) =>
+          setEmail(currentTarget.value)
+        }
         placeholder="Email"
         accent={accent}
       />
@@ -42,7 +41,9 @@ const LoginForm: React.FC<Props> = ({ accent }) => {
         value={password}
         className={styles.input}
         icon="lock"
-        onChange={onPasswordChange}
+        onChange={({ currentTarget }: FormEvent<HTMLInputElement>) =>
+          setPassword(currentTarget.value)
+        }
         placeholder="Password"
         type="password"
         accent={accent}
@@ -52,7 +53,7 @@ const LoginForm: React.FC<Props> = ({ accent }) => {
         <Button ghost text="Login" onClick={noop} accent={accent} />
         <Button ghost text="Help" onClick={noop} accent={accent} />
       </div>
-    </div>
+    </LoginPanel>
   );
 };
 

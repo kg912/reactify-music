@@ -1,5 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import ReduxTypes from 'redux/modules/moduleTypes';
 import { Redirect } from 'react-router-dom';
+import { getIsAuthenticated } from 'redux/modules/auth/selectors';
+
 import Sidebar from 'components/Sidebar/Sidebar';
 
 import styles from './app.module.scss';
@@ -31,4 +35,11 @@ const AppContainer: React.FC<Props> = ({ isAuthenticated = false }) => {
   );
 };
 
-export default AppContainer;
+const mapStateToProps = (state: ReduxTypes['state']) => ({
+  isAuthenticated: getIsAuthenticated(state)
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(AppContainer);
