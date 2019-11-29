@@ -44,7 +44,7 @@ const Login: React.FC<Props> = ({
   setTokenInfo = noop,
   isAuthenticated
 }) => {
-  const { accessToken, expiresIn, tokenType } = getHash();
+  const tokenInfo = getHash();
 
   const buttons = [
     {
@@ -62,13 +62,10 @@ const Login: React.FC<Props> = ({
   ];
 
   useEffect(() => {
-    console.log({ accessToken, expiresIn, tokenType });
-
-    if (accessToken && expiresIn && tokenType) {
-      setTokenInfo({ accessToken, expiresIn, tokenType });
-      // SpotifyService.setToken({ accessToken, expiresIn, tokenType })
+    if (Object.values(tokenInfo).filter(Boolean).length > 0) {
+      setTokenInfo(tokenInfo);
     }
-  }, [accessToken, expiresIn, tokenType]);
+  }, Object.values(tokenInfo));
 
   return isAuthenticated ? (
     <div className={pageContainer}>
