@@ -1,17 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { toCamelCaseObject } from 'helpers';
+import { toCamelCaseObject, noop } from 'helpers';
 
 import LogoHeader from 'components/LogoHeader';
+import Button from 'components/Button';
+import { actions } from 'redux/modules/auth';
 
 import SidebarSection from './SidebarSection';
 
 import sidebarStyles from './sidebar.module.scss';
 
-interface Sidebar {
+interface Props {
   style?: React.CSSProperties;
   className?: string;
+  logoutFromApp: () => void;
 }
+
+const defaultProps: Readonly<Props> = {
+  logoutFromApp: noop
+};
 
 const styles: { [s: string]: string } = toCamelCaseObject(sidebarStyles);
 
@@ -33,7 +41,7 @@ const dummySection = {
   }
 };
 
-const Sidebar: React.FC<Sidebar> = ({ style, className = '' }) => {
+const Sidebar: React.FC<Props> = ({ style, className = '', logoutFromApp }) => {
   const classes = classnames(styles.sidebarContainer, {
     [className]: !!className
   });
@@ -44,8 +52,20 @@ const Sidebar: React.FC<Sidebar> = ({ style, className = '' }) => {
       <div className={styles.sidebarContent}>
         <SidebarSection {...dummySection} />
       </div>
+      <Button
+        danger
+        onClick={logoutFromApp}
+        className={sidebarStyles['sidebar-footer-button']}
+        text="Logout"
+      />
     </nav>
   );
 };
 
-export default Sidebar;
+Sidebar.defaultProps = defaultProps;
+
+const mapActionsToProps = {
+  logoutFromApp: actions.logout
+};
+
+export default connect(null, mapActionsToProps)(Sidebar);

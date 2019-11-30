@@ -8,6 +8,10 @@ interface Modules {
   };
 }
 
+export interface DefaultAction {
+  payload: object;
+}
+
 type RootSelector = (state: Modules) => any;
 
 interface ModuleTypes {

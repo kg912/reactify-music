@@ -3,11 +3,9 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 
 import pageStyles from './login.module.scss';
-import { toCamelCaseObject, noop, getHash } from 'helpers';
-import { Spinner } from 'components';
+import { toCamelCaseObject, noop, hasPresentValues, getHash } from 'helpers';
 
 import { getAccent } from 'redux/modules/settings/selectors';
-import { getIsAuthenticated } from 'redux/modules/auth/selectors';
 import ReduxTypes from 'redux/modules/moduleTypes';
 import { actions } from 'redux/modules/auth';
 
@@ -39,12 +37,14 @@ const renderLoginButtons = (accent = 'teal') => (props = {}) => (
   />
 );
 
-const Login: React.FC<Props> = ({
-  accent = 'teal',
-  setTokenInfo = noop,
-  isAuthenticated
-}) => {
+const Login: React.FC<Props> = ({ accent = 'teal', setTokenInfo = noop }) => {
   const tokenInfo = getHash();
+  const tokenInfoFromLocalStorage = SpotifyService.getTokenFromStorage();
+
+  const combinedTokenInfo = {
+    ...tokenInfo,
+    ...tokenInfoFromLocalStorage
+  };
 
   const buttons = [
     {
@@ -62,16 +62,12 @@ const Login: React.FC<Props> = ({
   ];
 
   useEffect(() => {
-    if (Object.values(tokenInfo).filter(Boolean).length > 0) {
-      setTokenInfo(tokenInfo);
+    if (hasPresentValues(combinedTokenInfo)) {
+      setTokenInfo(combinedTokenInfo);
     }
-  }, Object.values(tokenInfo));
+  });
 
-  return isAuthenticated ? (
-    <div className={pageContainer}>
-      <Spinner />
-    </div>
-  ) : (
+  return (
     <div className={classnames(pageContainer, loginBackground)}>
       <LoginPanel>
         <LogoHeader accent={accent} className={styles.header} />
@@ -82,8 +78,7 @@ const Login: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: ReduxTypes['state']) => ({
-  accent: getAccent(state),
-  isAuthenticated: getIsAuthenticated(state)
+  accent: getAccent(state)
 });
 
 const mapActionsToProps = {

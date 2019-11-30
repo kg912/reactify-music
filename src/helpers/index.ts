@@ -5,14 +5,14 @@ import joinArray from './joinArray';
 import { getEnvVariable, getEnvVariables } from './getEnvVariable';
 import replaceUrlParams from './replaceUrlParams';
 import getHash from './getHash';
-import hasValidValues from './hasValidValues';
+import hasPresentValues from './hasPresentValues';
 
 export {
   capitalize,
   getEnvVariable,
   getEnvVariables,
   getHash,
-  hasValidValues,
+  hasPresentValues,
   noop,
   replaceUrlParams,
   toCamelCase,

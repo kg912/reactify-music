@@ -2,6 +2,7 @@ import { API } from 'utils/constants';
 import { replaceUrlParams } from 'helpers';
 
 import { getEnvVariables } from 'helpers';
+import { globalAgent } from 'http';
 
 const TOKEN_KEY = 'spotifyTokenInfo';
 
@@ -24,11 +25,19 @@ class SpotifyService {
   }
 
   getTokenFromStorage() {
-    return localStorage.getItem(TOKEN_KEY) || {};
+    try {
+      return JSON.parse(localStorage.getItem(TOKEN_KEY) || '');
+    } catch (_) {
+      return {};
+    }
   }
 
   setToken(tokenInfo = {}) {
     Object.assign(this, tokenInfo);
+
+    Object.assign(global, { loca: localStorage });
+
+    console.log('assigning tokenInof', tokenInfo);
 
     localStorage.setItem(TOKEN_KEY, JSON.stringify(tokenInfo));
   }

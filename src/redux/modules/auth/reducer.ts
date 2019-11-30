@@ -1,8 +1,10 @@
 import { handleActions } from 'redux-actions';
+import SpotifyService from 'services/SpotifyService';
 
-import { SET_AUTH_TOKEN } from './actions';
+import { SET_AUTH_TOKEN, LOGOUT } from './actions';
 
 import { AuthState } from './types';
+import { DefaultAction } from 'redux/modules/moduleTypes';
 
 const initialState: AuthState['state'] = {
   authToken: '',
@@ -11,15 +13,30 @@ const initialState: AuthState['state'] = {
   isAuthenticated: false
 };
 
-const setAuthToken: AuthState['reducer'] = (_, action) => ({
-  ...initialState,
-  ...action.payload.data,
-  isAuthenticated: true
-});
+const setAuthToken: AuthState['reducer'] = (_, action: DefaultAction) => {
+  const { payload } = action;
+
+  SpotifyService.setToken(payload);
+
+  return {
+    ...initialState,
+    ...payload,
+    isAuthenticated: true
+  };
+};
+
+const logoutFromApp: AuthState['reducer'] = () => {
+  SpotifyService.clearToken();
+
+  return {
+    ...initialState
+  };
+};
 
 const reducer = handleActions(
   {
-    [SET_AUTH_TOKEN]: setAuthToken
+    [SET_AUTH_TOKEN]: setAuthToken,
+    [LOGOUT]: logoutFromApp
   },
   initialState
 );

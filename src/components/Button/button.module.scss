@@ -75,3 +75,13 @@
 .rounded {
   @include rounded-elm(5rem);
 }
+
+.danger {
+  background-color: $danger-red !important;
+  color: white;
+
+  &:hover {
+    background-color: $danger-red-light !important;
+    color: white !important;
+  }
+}

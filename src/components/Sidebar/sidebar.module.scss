@@ -10,6 +10,9 @@
   height: 96vh;
   background-color: $reactify-medium-gray;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 490px;
 }
 
 .sidebar-content {
@@ -17,4 +20,12 @@
   flex-direction: column;
   margin: 1.5rem;
   height: 100%;
+}
+
+.sidebar-footer-button {
+  & button {
+    text-transform: none;
+    height: 105%;
+    width: 100%;
+  }
 }

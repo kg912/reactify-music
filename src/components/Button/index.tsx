@@ -11,6 +11,7 @@ const { transparent, colored, rounded } = styles;
 interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   accent?: string;
   className?: string;
+  danger?: boolean;
   onClick?: () => void;
   style?: React.CSSProperties;
   text?: string;
@@ -20,27 +21,35 @@ interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
 }
 
 const defaultProps: Readonly<ButtonProps> = {
-  accent: 'purple',
+  accent: 'teal',
+  danger: false,
   onClick: noop,
   isRounded: false,
   text: ''
 };
 
 const Button: React.FC<ButtonProps> = ({
-  accent = '',
-  className = '',
+  accent,
+  className,
+  danger,
   isRounded,
   style,
   ghost,
   onClick,
   text,
-  icon = 'cog',
+  icon,
   ...rest
 }) => {
   const appearance = ghost ? transparent : colored;
   const roundedClass = isRounded ? rounded : '';
+  const dangerRed = (danger && styles.danger) || '';
 
-  const base = joinArray(styles[`btn-${accent}`], appearance, roundedClass);
+  const base = joinArray(
+    styles[`btn-${accent}`],
+    appearance,
+    roundedClass,
+    dangerRed
+  );
 
   return (
     <div className={className}>
