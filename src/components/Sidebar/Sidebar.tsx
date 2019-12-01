@@ -23,20 +23,21 @@ const defaultProps: Readonly<Props> = {
 
 const styles: { [s: string]: string } = toCamelCaseObject(sidebarStyles);
 
-const list = [...Array(5).keys()].reduce(
+const list = [...Array(6).keys()].reduce(
   (acc: string[], curr: number): string[] => {
-    return [...acc, `subsection-${curr}`];
+    return [...acc, `subsection-${Math.random() * curr}`];
   },
   []
 );
 
-const dummySection = {
+const sectionInfo = {
   section: {
     sectionTitle: 'Your Music',
     items: list.map(item => ({
+      key: item,
       title: item,
       action: () => {},
-      icon: 'heart'
+      icon: 'cog'
     }))
   }
 };
@@ -50,7 +51,7 @@ const Sidebar: React.FC<Props> = ({ style, className = '', logoutFromApp }) => {
     <nav className={classes}>
       <LogoHeader />
       <div className={styles.sidebarContent}>
-        <SidebarSection {...dummySection} />
+        <SidebarSection {...sectionInfo} />
       </div>
       <Button
         danger

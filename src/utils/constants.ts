@@ -6,7 +6,8 @@ interface Index {
   [k: string]: string | undefined;
 }
 
-const BASE_URL = 'https://accounts.spotify.com';
+const ACCOUNTS_URL = 'https://accounts.spotify.com';
+const BASE_URL = 'https://api.spotify.com/v1';
 
 export const SIDEBAR_TITLE = 'Reactify Music';
 
@@ -34,8 +35,10 @@ export const ACCENTS: ACCENTS = {
 };
 
 export const API = {
-  AUTHORIZE: `${BASE_URL}/authorize?client_id={{client-id}}&redirect_uri={{redirect-uri}}&scope={{scope}}&response_type=token&show_dialog=true`,
-  SIGNUP: ''
+  ALBUMS: `${BASE_URL}/me/albums`,
+  AUTHORIZE: `${ACCOUNTS_URL}/authorize?client_id={{client-id}}&redirect_uri={{redirect-uri}}&scope={{scope}}&response_type=token&show_dialog=true`,
+  SIGNUP: 'https://spotify.com/signup',
+  TRACKS: `${BASE_URL}/me/tracks`
 };
 
 export type AccentType = 'teal' | 'purple' | 'red';

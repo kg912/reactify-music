@@ -1,3 +1,5 @@
+import { TokenInfo } from 'types';
+
 import ModuleTypes from '../moduleTypes';
 
 export interface State {
@@ -10,6 +12,10 @@ export interface State {
 export interface AuthState {
   state: State;
   moduleState: ModuleTypes['state'];
-  reducer: (state: object, action: { payload: { data: any } }) => State;
+  reducer: (state: object, action: { payload: any }) => State;
   rootSelector: (state: ModuleTypes['state']) => State;
+}
+
+export interface setAuthTokenAction {
+  payload: TokenInfo;
 }

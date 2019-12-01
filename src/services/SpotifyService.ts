@@ -1,12 +1,25 @@
-import { API } from 'utils/constants';
-import { replaceUrlParams } from 'helpers';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 
-import { getEnvVariables } from 'helpers';
-import { globalAgent } from 'http';
+import { API } from 'utils/constants';
+import { replaceUrlParams, getEnvVariables } from 'helpers';
+import { TokenInfo } from 'types';
 
 const TOKEN_KEY = 'spotifyTokenInfo';
 
-class SpotifyService {
+type APIResponse = Promise<AxiosResponse | { status: any }>;
+
+interface SpotifyService extends TokenInfo {
+  new (): SpotifyService;
+  authenticate(): void;
+  getTokenFromStorage(): TokenInfo | object;
+  getTracks(): APIResponse;
+  makeApiRequest(params: AxiosRequestConfig): APIResponse;
+  setToken(tokenInfo: TokenInfo): void;
+  clearToken(): void;
+  signup(): void;
+}
+
+class SpotifyService implements SpotifyService {
   accessToken = '';
   expiresIn = '';
   tokenType = '';
@@ -32,12 +45,31 @@ class SpotifyService {
     }
   }
 
-  setToken(tokenInfo = {}) {
+  makeApiRequest = async (params: AxiosRequestConfig) => {
+    try {
+      const data = await axios({
+        ...params,
+        headers: {
+          Authorization: `${this.tokenType} ${this.accessToken}`
+        }
+      });
+
+      return data;
+    } catch ({ response: { status } = {} }) {
+      return { status };
+    }
+  };
+
+  getTracks = () => {
+    return this.makeApiRequest({ method: 'get', url: API.TRACKS });
+  };
+
+  getAlbums = () => {
+    return this.makeApiRequest({ method: 'get', url: API.ALBUMS });
+  };
+
+  setToken(tokenInfo: TokenInfo) {
     Object.assign(this, tokenInfo);
-
-    Object.assign(global, { loca: localStorage });
-
-    console.log('assigning tokenInof', tokenInfo);
 
     localStorage.setItem(TOKEN_KEY, JSON.stringify(tokenInfo));
   }
@@ -51,7 +83,7 @@ class SpotifyService {
   }
 
   signup = () => {
-    window.open('https://spotify.com/signup');
+    window.open(API.SIGNUP);
   };
 }
 

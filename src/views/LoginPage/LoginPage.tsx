@@ -8,6 +8,9 @@ import { toCamelCaseObject, noop, hasPresentValues, getHash } from 'helpers';
 import { getAccent } from 'redux/modules/settings/selectors';
 import ReduxTypes from 'redux/modules/moduleTypes';
 import { actions } from 'redux/modules/auth';
+import { BrowserRouter, Route, Redirect, RouteProps } from 'react-router-dom';
+
+import { getIsAuthenticated } from 'redux/modules/auth/selectors';
 
 import { AccentType } from 'utils/constants';
 
@@ -37,7 +40,19 @@ const renderLoginButtons = (accent = 'teal') => (props = {}) => (
   />
 );
 
-const Login: React.FC<Props> = ({ accent = 'teal', setTokenInfo = noop }) => {
+const Redirection = ({ path = '' }) => (
+  <Redirect
+    to={{
+      pathname: path
+    }}
+  />
+);
+
+const Login: React.FC<Props> = ({
+  accent = 'teal',
+  setTokenInfo = noop,
+  isAuthenticated
+}) => {
   const tokenInfo = getHash();
   const tokenInfoFromLocalStorage = SpotifyService.getTokenFromStorage();
 
@@ -67,7 +82,13 @@ const Login: React.FC<Props> = ({ accent = 'teal', setTokenInfo = noop }) => {
     }
   });
 
-  return (
+  return isAuthenticated ? (
+    <Redirect
+      to={{
+        pathname: '/home'
+      }}
+    />
+  ) : (
     <div className={classnames(pageContainer, loginBackground)}>
       <LoginPanel>
         <LogoHeader accent={accent} className={styles.header} />
@@ -78,7 +99,8 @@ const Login: React.FC<Props> = ({ accent = 'teal', setTokenInfo = noop }) => {
 };
 
 const mapStateToProps = (state: ReduxTypes['state']) => ({
-  accent: getAccent(state)
+  accent: getAccent(state),
+  isAuthenticated: getIsAuthenticated(state)
 });
 
 const mapActionsToProps = {
