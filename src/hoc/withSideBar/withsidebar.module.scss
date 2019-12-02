@@ -1,0 +1,14 @@
+$elm-margin: 1.5rem;
+
+.app {
+  display: flex;
+}
+
+.sidebar {
+  margin: $elm-margin;
+}
+
+.app-content {
+  margin: $elm-margin 0;
+  width: 75%;
+}

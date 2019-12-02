@@ -7,14 +7,28 @@
   @include rounded-elm(1.5rem);
 
   width: 25%;
+  min-width: 350px;
   height: 96vh;
   background-color: $reactify-medium-gray;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 490px;
 }
 
 .sidebar-content {
   display: flex;
+  height: 600px;
   flex-direction: column;
+  overflow: scroll;
   margin: 1.5rem;
-  height: 100%;
+}
+
+.sidebar-footer-button {
+  & button {
+    border-radius: 0;
+    text-transform: none;
+    height: 105%;
+    width: 100%;
+  }
 }

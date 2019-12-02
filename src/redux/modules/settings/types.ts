@@ -1,5 +1,7 @@
+import { AccentType } from 'utils/constants';
+
 export interface State {
-  accent: string;
+  accent: AccentType;
 }
 
 export interface SettingState {

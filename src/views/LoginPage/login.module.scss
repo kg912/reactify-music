@@ -4,8 +4,26 @@
 .page-container {
   @include display-flex;
 
-  background: url('~static/background.jpg');
-  background-size: cover;
   color: $white;
   height: 100vh;
+}
+
+.login-background {
+  background: url('~static/background.jpg');
+  background-size: cover;
+}
+
+.header {
+  transform: translateX(-1.2rem);
+  margin-bottom: 3.5rem;
+}
+
+.login-button {
+  & button {
+    margin: 1rem;
+    padding: 1rem 2rem;
+    text-transform: none;
+    font-size: 1.9rem;
+    width: 25rem;
+  }
 }

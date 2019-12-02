@@ -1,5 +1,11 @@
-.logo {
-  & svg {
-    fill: green;
-  }
+@import '~sass/colors.scss';
+@import '~sass/mixins.scss';
+
+.main-container {
+  @include rounded-elm(1.5rem);
+  @include box-shadow;
+
+  background-color: $reactify-medium-gray;
+  height: 100%;
+  margin-right: 1.5rem;
 }

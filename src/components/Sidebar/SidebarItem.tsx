@@ -4,9 +4,9 @@ import classnames from 'classnames';
 import Icon from 'components/Icon';
 
 import itemStyles from './sidebarItem.module.scss';
-import { toCamelCase } from 'helpers';
+import { toCamelCaseObject } from 'helpers';
 
-const styles: { [s: string]: string } = toCamelCase(itemStyles);
+const styles: { [s: string]: string } = toCamelCaseObject(itemStyles);
 
 interface SidebarItem {
   title: string;

@@ -1,39 +1,48 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { toCamelCase } from 'helpers';
+import { toCamelCaseObject, noop } from 'helpers';
 
 import LogoHeader from 'components/LogoHeader';
+import Button from 'components/Button';
+import { actions } from 'redux/modules/auth';
 
 import SidebarSection from './SidebarSection';
 
 import sidebarStyles from './sidebar.module.scss';
 
-interface Sidebar {
+interface Props {
   style?: React.CSSProperties;
   className?: string;
+  logoutFromApp: () => void;
 }
 
-const styles: { [s: string]: string } = toCamelCase(sidebarStyles);
+const defaultProps: Readonly<Props> = {
+  logoutFromApp: noop
+};
 
-const list = [...Array(5).keys()].reduce(
+const styles: { [s: string]: string } = toCamelCaseObject(sidebarStyles);
+
+const list = [...Array(6).keys()].reduce(
   (acc: string[], curr: number): string[] => {
-    return [...acc, `subsection-${curr}`];
+    return [...acc, `subsection-${Math.random() * curr}`];
   },
   []
 );
 
-const dummySection = {
+const sectionInfo = {
   section: {
     sectionTitle: 'Your Music',
     items: list.map(item => ({
+      key: item,
       title: item,
       action: () => {},
-      icon: 'heart'
+      icon: 'cog'
     }))
   }
 };
 
-const Sidebar: React.FC<Sidebar> = ({ style, className = '' }) => {
+const Sidebar: React.FC<Props> = ({ style, className = '', logoutFromApp }) => {
   const classes = classnames(styles.sidebarContainer, {
     [className]: !!className
   });
@@ -42,10 +51,22 @@ const Sidebar: React.FC<Sidebar> = ({ style, className = '' }) => {
     <nav className={classes}>
       <LogoHeader />
       <div className={styles.sidebarContent}>
-        <SidebarSection {...dummySection} />
+        <SidebarSection {...sectionInfo} />
       </div>
+      <Button
+        danger
+        onClick={logoutFromApp}
+        className={sidebarStyles['sidebar-footer-button']}
+        text="Logout"
+      />
     </nav>
   );
 };
 
-export default Sidebar;
+Sidebar.defaultProps = defaultProps;
+
+const mapActionsToProps = {
+  logoutFromApp: actions.logout
+};
+
+export default connect(null, mapActionsToProps)(Sidebar);

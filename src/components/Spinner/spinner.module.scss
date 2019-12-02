@@ -1,0 +1,32 @@
+@import '~sass/colors';
+
+@-webkit-keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@mixin spinner($color) {
+  -webkit-animation: spinner 2s linear infinite;
+  animation: spinner 2s linear infinite;
+  height: 105px;
+  width: 105px;
+}
+
+.spinner-teal {
+  @include spinner($teal);
+}
+
+.spinner-red {
+  @include spinner($red);
+}
+
+.spinner-purple {
+  @include spinner($purple);
+}
