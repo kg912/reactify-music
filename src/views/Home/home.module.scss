@@ -1,11 +1,37 @@
 @import '~sass/colors.scss';
 @import '~sass/mixins.scss';
+@import '~sass/fonts.scss';
 
-.main-container {
+@mixin main-container($color) {
+  @include NotoSansHK-Regular;
   @include rounded-elm(1.5rem);
   @include box-shadow;
 
   background-color: $reactify-medium-gray;
   height: 100%;
   margin-right: 1.5rem;
+  color: $color;
+
+  .main-title {
+    padding: 3rem 0 0 3rem;
+    font-size: 3.2em;
+  }
+
+  .list-item {
+    border: 2px dotted $color;
+    padding: 4px;
+    margin-bottom: 3px;
+  }
+}
+
+.main-container-teal {
+  @include main-container($teal);
+}
+
+.main-container-purple {
+  @include main-container($purple);
+}
+
+.main-container-red {
+  @include main-container($red);
 }

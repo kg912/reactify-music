@@ -18,7 +18,7 @@ import LoginPanel from 'components/LoginPanel/LoginPanel';
 import LogoHeader from 'components/LogoHeader';
 import Button from 'components/Button';
 
-import SpotifyService from 'services/SpotifyService';
+import SpotifyService from 'services/SpotifyService/SpotifyService';
 
 interface Props {
   accent: AccentType;

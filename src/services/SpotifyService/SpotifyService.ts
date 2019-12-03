@@ -4,16 +4,21 @@ import { API } from 'utils/constants';
 import { replaceUrlParams, getEnvVariables } from 'helpers';
 import { TokenInfo } from 'types';
 
+import { TrackAPIResponse } from './SpotifyAPITypes';
+
+import Track from './TracksModel';
+
 const TOKEN_KEY = 'spotifyTokenInfo';
 
-type APIResponse = Promise<AxiosResponse | { status: any }>;
+interface APIData {
+  data?: Object;
+  status: number;
+}
 
 interface SpotifyService extends TokenInfo {
   new (): SpotifyService;
   authenticate(): void;
   getTokenFromStorage(): TokenInfo | object;
-  getTracks(): APIResponse;
-  makeApiRequest(params: AxiosRequestConfig): APIResponse;
   setToken(tokenInfo: TokenInfo): void;
   clearToken(): void;
   signup(): void;
@@ -45,23 +50,31 @@ class SpotifyService implements SpotifyService {
     }
   }
 
-  makeApiRequest = async (params: AxiosRequestConfig) => {
+  makeApiRequest<T>(params: AxiosRequestConfig) {
+    return axios.request<T>({
+      ...params,
+      headers: {
+        Authorization: `${this.tokenType} ${this.accessToken}`
+      }
+    });
+  }
+
+  getTracks = async (offset: number = 0, limit: number = 20) => {
     try {
-      const data = await axios({
-        ...params,
-        headers: {
-          Authorization: `${this.tokenType} ${this.accessToken}`
-        }
+      const {
+        data: { items },
+        status
+      } = await this.makeApiRequest<TrackAPIResponse>({
+        method: 'get',
+        url: `${API.TRACKS}?offset=${offset}&limit=${limit}`
       });
 
-      return data;
-    } catch ({ response: { status } = {} }) {
+      const tracks = items.map(({ track }) => new Track(track));
+
+      return { tracks, status };
+    } catch ({ response: { status } }) {
       return { status };
     }
-  };
-
-  getTracks = () => {
-    return this.makeApiRequest({ method: 'get', url: API.TRACKS });
   };
 
   getAlbums = () => {
