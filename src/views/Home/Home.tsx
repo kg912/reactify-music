@@ -51,7 +51,9 @@ class Home extends Component<Props, State> {
     }
 
     return tracks.map((item: TracksModel) => (
-      <div className={styles['list-item']}>{item.name}</div>
+      <div key={item.uri} className={styles['list-item']}>
+        {item.name}
+      </div>
     ));
   }
   render() {

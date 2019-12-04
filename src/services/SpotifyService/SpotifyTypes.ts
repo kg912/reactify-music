@@ -1,3 +1,5 @@
+import { TokenInfo } from 'types';
+
 export interface Artist {
   external_urls: {
     spotify: string;
@@ -56,4 +58,20 @@ export interface Track {
 
 export interface TrackAPIResponse {
   items: { track: Track }[];
+}
+
+export interface APIData {
+  data?: Object;
+  status: number;
+}
+
+export interface SpotifyServiceType extends TokenInfo {
+  accessToken: string;
+  expiresIn: string;
+  tokenType: string;
+  authenticate(): void;
+  getTokenFromStorage(): TokenInfo | object;
+  setToken(tokenInfo: TokenInfo): void;
+  clearToken(): void;
+  signup(): void;
 }

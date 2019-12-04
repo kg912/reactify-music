@@ -1,33 +1,22 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 
-import { API } from 'utils/constants';
+import { API, SPOTIFY_PLAYER_URL } from 'utils/constants';
 import { replaceUrlParams, getEnvVariables } from 'helpers';
 import { TokenInfo } from 'types';
+import { fetchSpotifyPlayer } from './fetchSpotifyPlayer';
 
-import { TrackAPIResponse } from './SpotifyAPITypes';
+import { TrackAPIResponse, SpotifyServiceType, APIData } from './SpotifyTypes';
 
 import Track from './TracksModel';
 
 const TOKEN_KEY = 'spotifyTokenInfo';
 
-interface APIData {
-  data?: Object;
-  status: number;
-}
-
-interface SpotifyService extends TokenInfo {
-  new (): SpotifyService;
-  authenticate(): void;
-  getTokenFromStorage(): TokenInfo | object;
-  setToken(tokenInfo: TokenInfo): void;
-  clearToken(): void;
-  signup(): void;
-}
-
-class SpotifyService implements SpotifyService {
+class SpotifyService implements SpotifyServiceType {
   accessToken = '';
   expiresIn = '';
   tokenType = '';
+  player = null;
+  deviceId = '';
 
   constructor() {
     Object.assign(
@@ -50,7 +39,7 @@ class SpotifyService implements SpotifyService {
     }
   }
 
-  makeApiRequest<T>(params: AxiosRequestConfig) {
+  makeApiRequest<T = APIData>(params: AxiosRequestConfig) {
     return axios.request<T>({
       ...params,
       headers: {
@@ -58,6 +47,16 @@ class SpotifyService implements SpotifyService {
       }
     });
   }
+
+  initializePlayer = async () => {
+    const { player, deviceId } = (await fetchSpotifyPlayer({
+      url: SPOTIFY_PLAYER_URL,
+      token: this.accessToken
+    })) as { player: any; deviceId: string };
+
+    this.player = player;
+    this.deviceId = deviceId;
+  };
 
   getTracks = async (offset: number = 0, limit: number = 20) => {
     try {
@@ -83,6 +82,8 @@ class SpotifyService implements SpotifyService {
 
   setToken(tokenInfo: TokenInfo) {
     Object.assign(this, tokenInfo);
+
+    this.initializePlayer();
 
     localStorage.setItem(TOKEN_KEY, JSON.stringify(tokenInfo));
   }

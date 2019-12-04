@@ -1,4 +1,4 @@
-import { Track, Artist, Album } from './SpotifyAPITypes';
+import { Track, Artist, Album } from './SpotifyTypes';
 
 class TrackModel {
   name: string;

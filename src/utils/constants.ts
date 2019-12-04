@@ -8,6 +8,7 @@ interface Index {
 
 const ACCOUNTS_URL = 'https://accounts.spotify.com';
 const BASE_URL = 'https://api.spotify.com/v1';
+export const SPOTIFY_PLAYER_URL = 'https://sdk.scdn.co/spotify-player.js';
 
 export const SIDEBAR_TITLE = 'Reactify Music';
 
@@ -22,6 +23,16 @@ export const COLORS: Index = {
   TEAL: ' #09d3ac',
   PURPLE: '#948ced',
   RED: '#b34f44'
+};
+
+export const SPOTIFY_PLAYER_LISTENER = {
+  INITIALIZE_ERROR: 'initialization_error',
+  AUTH_ERROR: 'authentication_error',
+  ACCOUNT_ERROR: 'account_error',
+  PLAYBACK_ERROR: 'playback_error',
+  PLAYER_STATE_CHANGED: 'player_state_changed',
+  READY: 'ready',
+  NOT_READY: 'not_ready'
 };
 
 interface ACCENTS {
