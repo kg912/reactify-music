@@ -24,36 +24,42 @@ const createPlayer = (
 ) => () => {
   let deviceId = '';
   const { Spotify } = window;
+  try {
+    const player = new Spotify.Player({
+      name: 'Reactify Music',
+      getOAuthToken: (cb = noop) => {
+        cb(token);
+      }
+    });
 
-  const player = new Spotify.Player({
-    name: 'Reactify Music',
-    getOAuthToken: (cb = noop) => {
-      cb(token);
-    }
-  });
+    [
+      INITIALIZE_ERROR,
+      AUTH_ERROR,
+      ACCOUNT_ERROR,
+      PLAYBACK_ERROR
+    ].forEach(error => player.addListener(error, logError));
 
-  [INITIALIZE_ERROR, AUTH_ERROR, ACCOUNT_ERROR, PLAYBACK_ERROR].forEach(error =>
-    player.addListener(error, logError)
-  );
+    player.addListener(PLAYER_STATE_CHANGED, state => {
+      console.info(`${LOG_PREFIX}player is now in ${state} state`);
+    });
 
-  player.addListener(PLAYER_STATE_CHANGED, state => {
-    console.info(`${LOG_PREFIX}player is now in ${state} state`);
-  });
+    player.addListener(READY, ({ device_id }) => {
+      deviceId = device_id as string;
+      console.info(`${LOG_PREFIX}player is now Ready`);
+    });
 
-  player.addListener(READY, ({ device_id }) => {
-    deviceId = device_id as string;
-    console.info(`${LOG_PREFIX}player is now Ready`);
-  });
+    // Not Ready
+    player.addListener(NOT_READY, () => {
+      console.info(`${LOG_PREFIX}device is offline`);
+    });
 
-  // Not Ready
-  player.addListener(NOT_READY, () => {
-    console.info(`${LOG_PREFIX}device is offline`);
-  });
+    // Connect to the player!
+    player.connect();
 
-  // Connect to the player!
-  player.connect();
-
-  resolve({ player, deviceId });
+    resolve({ player, deviceId });
+  } catch (e) {
+    console.log(e.response);
+  }
 };
 
 export function fetchSpotifyPlayer({ url = '', token = '' } = {}) {

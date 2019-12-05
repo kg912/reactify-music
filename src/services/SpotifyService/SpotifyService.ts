@@ -8,6 +8,7 @@ import { fetchSpotifyPlayer } from './fetchSpotifyPlayer';
 import { TrackAPIResponse, SpotifyServiceType, APIData } from './SpotifyTypes';
 
 import Track from './TracksModel';
+import { catchClause } from '@babel/types';
 
 const TOKEN_KEY = 'spotifyTokenInfo';
 
@@ -53,6 +54,9 @@ class SpotifyService implements SpotifyServiceType {
       url: SPOTIFY_PLAYER_URL,
       token: this.accessToken
     })) as { player: any; deviceId: string };
+
+    // @ts-ignore
+    window.player = player;
 
     this.player = player;
     this.deviceId = deviceId;

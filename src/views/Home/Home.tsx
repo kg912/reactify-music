@@ -50,11 +50,15 @@ class Home extends Component<Props, State> {
       return null;
     }
 
-    return tracks.map((item: TracksModel) => (
-      <div key={item.uri} className={styles['list-item']}>
-        {item.name}
+    return (
+      <div className={styles.list}>
+        {tracks.map((item: TracksModel) => (
+          <div key={item.uri} className={styles['list-item']}>
+            {item.name}
+          </div>
+        ))}
       </div>
-    ));
+    );
   }
   render() {
     const { accent } = this.props;
