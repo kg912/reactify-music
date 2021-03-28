@@ -6,7 +6,7 @@ import { toCamelCaseObject, noop } from 'helpers';
 import LoginPanel from 'components/LoginPanel/LoginPanel';
 import LogoHeader from 'components/LogoHeader';
 import Input from 'components/Input';
-import Button from 'components/Button';
+import Button from 'components/Button/Button';
 
 const styles = toCamelCaseObject(pageStyles);
 

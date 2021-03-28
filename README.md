@@ -1,8 +1,6 @@
-# Reactify Music
+# Reactify Music [Work in Progress]
 
-> This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-Spotify client built using React.js, Redux, TypeScript and SASS.
+Spotify client using React.js, Redux, TypeScript and SASS.
 
 Getting started:
 

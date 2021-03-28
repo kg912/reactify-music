@@ -18,10 +18,6 @@ const mapActionToProps = {
 
 function withSideBar(WrappedComponent: React.ComponentClass) {
   class HOCComponent extends React.Component {
-    constructor(props: object) {
-      super(props);
-    }
-
     render() {
       return (
         <div className={styles.app}>

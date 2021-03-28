@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-import SpotifyService from 'services/SpotifyService';
+import SpotifyService from 'services/SpotifyService/SpotifyService';
 
 import { SET_AUTH_TOKEN, LOGOUT } from './actions';
 

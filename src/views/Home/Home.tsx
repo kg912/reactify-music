@@ -1,35 +1,52 @@
 import React, { Component } from 'react';
-import { toCamelCaseObject, noop } from 'helpers';
+import { noop } from 'helpers';
 
-import SpotifyService from 'services/SpotifyService';
+import { AccentType } from 'utils/constants';
+
+import SpotifyService from 'services/SpotifyService/SpotifyService';
 
 import withSideBar from 'hoc/withSideBar/withSideBar';
 
-import homeStyles from './home.module.scss';
+import styles from './home.module.scss';
+import TracksModel from 'services/SpotifyService/TracksModel';
 
-const styles = toCamelCaseObject(homeStyles);
+import TrackList from './TrackList';
 
 interface Props {
   logout?: () => void;
+  accent?: AccentType;
 }
 
-class Home extends Component<Props> {
-  static defaultProps: Readonly<Props> = {
-    logout: noop
+interface State {
+  tracks: TracksModel[];
+}
+
+const defaultProps: Readonly<Props> = {
+  logout: noop,
+  accent: 'teal'
+};
+
+class Home extends Component<Props, State> {
+  static defaultProps = defaultProps;
+
+  state = {
+    tracks: []
   };
-
   async componentDidMount() {
-    const { logout = noop } = this.props;
-    const response = await SpotifyService.getTracks();
+    const tracks = await SpotifyService.getTracks(30, 50);
 
-    if (response.status === 401) {
-      logout();
+    if (tracks) {
+      this.setState({ tracks });
     }
   }
   render() {
+    const { accent } = this.props;
+    const { tracks } = this.state;
+
     return (
-      <div className={styles.mainContainer}>
-        <h1>HOME SCREEN TIME</h1>
+      <div className={styles[`main-container-${accent}`]}>
+        <h1 className={styles[`main-title`]}>Your Tracks</h1>
+        {<TrackList tracks={tracks} className={styles['track-list']} />}
       </div>
     );
   }
