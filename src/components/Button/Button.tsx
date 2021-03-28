@@ -6,7 +6,7 @@ import { noop, joinArray } from 'helpers';
 
 import styles from './button.module.scss';
 
-const { transparent, colored, rounded } = styles;
+const { transparent, colored, rounded, padding } = styles;
 
 interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   accent?: string;
@@ -48,14 +48,15 @@ const Button: React.FC<ButtonProps> = ({
     styles[`btn-${accent}`],
     appearance,
     roundedClass,
-    dangerRed
+    dangerRed,
+    text ? styles['text-padding'] : styles['no-text-icon']
   );
 
   return (
     <div className={className}>
       <button className={base} onClick={onClick} style={style}>
         {icon && <Icon name={icon} />}
-        {text}
+        {text && text}
       </button>
     </div>
   );

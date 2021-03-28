@@ -10,6 +10,8 @@ import withSideBar from 'hoc/withSideBar/withSideBar';
 import styles from './home.module.scss';
 import TracksModel from 'services/SpotifyService/TracksModel';
 
+import TrackList from './TrackList';
+
 interface Props {
   logout?: () => void;
   accent?: AccentType;
@@ -31,42 +33,20 @@ class Home extends Component<Props, State> {
     tracks: []
   };
   async componentDidMount() {
-    const { logout = noop } = this.props;
-    const { tracks, status } = await SpotifyService.getTracks();
-
-    if (status === 401) {
-      logout();
-    }
+    const tracks = await SpotifyService.getTracks(30, 50);
 
     if (tracks) {
       this.setState({ tracks });
     }
   }
-
-  getTrackList() {
-    const { tracks } = this.state;
-
-    if (!tracks) {
-      return null;
-    }
-
-    return (
-      <div className={styles.list}>
-        {tracks.map((item: TracksModel) => (
-          <div key={item.uri} className={styles['list-item']}>
-            {item.name}
-          </div>
-        ))}
-      </div>
-    );
-  }
   render() {
     const { accent } = this.props;
+    const { tracks } = this.state;
 
     return (
       <div className={styles[`main-container-${accent}`]}>
         <h1 className={styles[`main-title`]}>Your Tracks</h1>
-        {this.getTrackList()}
+        {<TrackList tracks={tracks} className={styles['track-list']} />}
       </div>
     );
   }

@@ -8,7 +8,7 @@ import { toCamelCaseObject, noop, hasPresentValues, getHash } from 'helpers';
 import { getAccent } from 'redux/modules/settings/selectors';
 import ReduxTypes from 'redux/modules/moduleTypes';
 import { actions } from 'redux/modules/auth';
-import { BrowserRouter, Route, Redirect, RouteProps } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import { getIsAuthenticated } from 'redux/modules/auth/selectors';
 
@@ -16,7 +16,7 @@ import { AccentType } from 'utils/constants';
 
 import LoginPanel from 'components/LoginPanel/LoginPanel';
 import LogoHeader from 'components/LogoHeader';
-import Button from 'components/Button';
+import Button from 'components/Button/Button';
 
 import SpotifyService from 'services/SpotifyService/SpotifyService';
 
@@ -92,7 +92,9 @@ const Login: React.FC<Props> = ({
     <div className={classnames(pageContainer, loginBackground)}>
       <LoginPanel>
         <LogoHeader accent={accent} className={styles.header} />
-        {buttons.map(renderLoginButtons(accent))}
+        <div className={styles.buttonContainer}>
+          {buttons.map(renderLoginButtons(accent))}
+        </div>
       </LoginPanel>
     </div>
   );

@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React from 'react';
 
-import Button from 'components/Button';
+import Button from 'components/Button/Button';
 
 import styles from './modal.module.scss';
 

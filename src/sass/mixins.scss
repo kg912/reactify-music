@@ -39,3 +39,9 @@
   height: 100%;
   display: block;
 }
+
+@mixin text-no-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

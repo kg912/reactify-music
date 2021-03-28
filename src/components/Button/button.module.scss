@@ -7,7 +7,6 @@
   @include display-flex;
 
   text-transform: capitalize;
-  padding: 0.7rem 4rem;
   transition: all 0.2s;
   font-size: 1.6rem;
   color: $color;
@@ -83,5 +82,17 @@
   &:hover {
     background-color: $danger-red-light !important;
     color: white !important;
+  }
+}
+
+.text-padding {
+  padding: 0.7rem 4rem;
+}
+
+.no-text-icon {
+  & ion-icon {
+    margin: 0;
+    transform: translateY(0);
+    padding: 0.4rem;
   }
 }

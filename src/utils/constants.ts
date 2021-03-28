@@ -49,7 +49,8 @@ export const API = {
   ALBUMS: `${BASE_URL}/me/albums`,
   AUTHORIZE: `${ACCOUNTS_URL}/authorize?client_id={{client-id}}&redirect_uri={{redirect-uri}}&scope={{scope}}&response_type=token&show_dialog=true`,
   SIGNUP: 'https://spotify.com/signup',
-  TRACKS: `${BASE_URL}/me/tracks`
+  TRACKS: `${BASE_URL}/me/tracks`,
+  PLAY: 'https://api.spotify.com/v1/me/player/play?device_id={{id}}'
 };
 
 export type AccentType = 'teal' | 'purple' | 'red';

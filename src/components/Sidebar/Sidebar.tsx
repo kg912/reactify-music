@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { toCamelCaseObject, noop } from 'helpers';
 
 import LogoHeader from 'components/LogoHeader';
-import Button from 'components/Button';
+import Button from 'components/Button/Button';
 import { actions } from 'redux/modules/auth';
 
 import SidebarSection from './SidebarSection';

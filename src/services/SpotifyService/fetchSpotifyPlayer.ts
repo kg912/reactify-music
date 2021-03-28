@@ -2,6 +2,8 @@ import { noop } from 'helpers';
 
 import { SPOTIFY_PLAYER_LISTENER } from 'utils/constants';
 
+import { PlayerState } from 'types';
+
 const {
   INITIALIZE_ERROR,
   AUTH_ERROR,
@@ -12,59 +14,86 @@ const {
   NOT_READY
 } = SPOTIFY_PLAYER_LISTENER;
 
+interface createPlayerArgs {
+  player: any;
+  deviceId: string;
+}
+
+interface Message {
+  message: string;
+}
+
 const LOG_PREFIX = '[Spotify-Player] - ';
 
-const logError = ({ message }: { message?: string }) => {
-  console.error(`${LOG_PREFIX}${message}`);
+const logError = (listenerName: string) => ({
+  message
+}: {
+  message?: string;
+}) => {
+  console.error(`${LOG_PREFIX}${message} < ${listenerName}`);
 };
 
 const createPlayer = (
   token = '',
-  resolve: ({ player, deviceId }: { player: any; deviceId: string }) => void
+  resolve: ({ player, deviceId }: createPlayerArgs) => void,
+  onPlayerStateChange: (state: PlayerState) => void,
+  onPlayerAuthError: () => void
 ) => () => {
   let deviceId = '';
   const { Spotify } = window;
-  try {
-    const player = new Spotify.Player({
-      name: 'Reactify Music',
-      getOAuthToken: (cb = noop) => {
-        cb(token);
-      }
-    });
 
-    [
-      INITIALIZE_ERROR,
-      AUTH_ERROR,
-      ACCOUNT_ERROR,
-      PLAYBACK_ERROR
-    ].forEach(error => player.addListener(error, logError));
+  const player = new Spotify.Player({
+    name: 'Reactify Music',
+    getOAuthToken: (cb = noop) => {
+      cb(token);
+    }
+  });
 
-    player.addListener(PLAYER_STATE_CHANGED, state => {
-      console.info(`${LOG_PREFIX}player is now in ${state} state`);
-    });
+  [INITIALIZE_ERROR, ACCOUNT_ERROR, PLAYBACK_ERROR].forEach(error =>
+    player.addListener(error, logError(error))
+  );
 
-    player.addListener(READY, ({ device_id }) => {
-      deviceId = device_id as string;
-      console.info(`${LOG_PREFIX}player is now Ready`);
-    });
+  player.addListener(AUTH_ERROR, ({ message }) => {
+    console.error(`${LOG_PREFIX}${message}`);
 
-    // Not Ready
-    player.addListener(NOT_READY, () => {
-      console.info(`${LOG_PREFIX}device is offline`);
-    });
+    onPlayerAuthError();
+  });
 
-    // Connect to the player!
-    player.connect();
+  player.addListener(PLAYER_STATE_CHANGED, state => {
+    console.info(`${LOG_PREFIX}player state changed`);
 
-    resolve({ player, deviceId });
-  } catch (e) {
-    console.log(e.response);
-  }
+    onPlayerStateChange(state as PlayerState);
+  });
+
+  player.addListener(READY, ({ device_id }) => {
+    deviceId = device_id as string;
+    console.info(`${LOG_PREFIX}player is now Ready`);
+  });
+
+  // Not Ready
+  player.addListener(NOT_READY, () => {
+    console.info(`${LOG_PREFIX}device is offline`);
+  });
+
+  // Connect to the player!
+  player.connect();
+
+  resolve({ player, deviceId });
 };
 
-export function fetchSpotifyPlayer({ url = '', token = '' } = {}) {
+export function fetchSpotifyPlayer({
+  url = '',
+  token = '',
+  onPlayerStateChange = (state: PlayerState) => {},
+  onPlayerAuthError = () => {}
+} = {}) {
   return new Promise((resolve, reject) => {
-    window.onSpotifyWebPlaybackSDKReady = createPlayer(token, resolve);
+    window.onSpotifyWebPlaybackSDKReady = createPlayer(
+      token,
+      resolve,
+      onPlayerStateChange,
+      onPlayerAuthError
+    );
 
     const scriptTag = document.createElement('script');
     scriptTag.type = 'text/javascript';

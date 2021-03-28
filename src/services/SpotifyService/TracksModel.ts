@@ -1,6 +1,7 @@
-import { Track, Artist, Album } from './SpotifyTypes';
+import { Track, Artist, Album } from 'types';
 
 class TrackModel {
+  id: string;
   name: string;
   uri: string;
   href: string;
@@ -8,7 +9,8 @@ class TrackModel {
   artists: Artist[];
   album: Album;
 
-  constructor({ name, uri, href, popularity, artists, album }: Track) {
+  constructor({ id, name, uri, href, popularity, artists, album }: Track) {
+    this.id = id;
     this.name = name;
     this.uri = uri;
     this.href = href;

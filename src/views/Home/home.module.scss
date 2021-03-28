@@ -18,20 +18,8 @@
     font-size: 3.2em;
   }
 
-  .list {
-    margin: 1rem 0 0 1rem;
-    padding: 10px;
-    width: 40%;
-    height: 300px;
-    overflow-y: scroll;
-  }
-
-  .list-item {
-    @include rounded-elm(0.8rem);
-    color: white;
-    background: $translucent;
-    padding: 20px;
-    margin-bottom: 3px;
+  .track-list {
+    margin-top: 2rem;
   }
 }
 

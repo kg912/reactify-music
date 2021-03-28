@@ -1,0 +1,78 @@
+@import '~sass/colors.scss';
+@import '~sass/mixins.scss';
+@import '~sass/fonts.scss';
+
+.main-container {
+  margin: 1rem;
+
+  .list {
+    display: flex;
+    width: 99%;
+    overflow: auto;
+    height: 23rem;
+  }
+
+  .list-item {
+    @include rounded-elm(0.8rem);
+    position: relative;
+    border-radius: 0.8rem;
+    overflow: hidden;
+
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+
+    height: 18rem;
+    width: 18rem;
+    min-width: 180px;
+    margin: 0 1rem 0.5rem 1.45rem;
+    background: $reactify-alt-gray;
+
+    .item-icon {
+      padding: 1rem;
+      position: absolute;
+      visibility: hidden;
+      top: 37%;
+    }
+
+    &:hover {
+      border: 1px solid $teal;
+      background: rgba(0, 0, 0, 0.2);
+      .item-image {
+        @include blur(10px);
+
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 0.8rem;
+      }
+
+      .item-icon {
+        visibility: visible;
+      }
+    }
+
+    .item-image {
+      border-radius: 0.8rem;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+  }
+
+  .item-text {
+    @include text-no-overflow;
+    @include NotoSansHK-Bold;
+
+    width: 19rem;
+
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0;
+    padding: 0 1.2rem;
+
+    color: $white;
+
+    font-size: 1rem;
+  }
+}

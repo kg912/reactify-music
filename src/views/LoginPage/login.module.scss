@@ -18,12 +18,16 @@
   margin-bottom: 3.5rem;
 }
 
-.login-button {
-  & button {
-    margin: 1rem;
-    padding: 1rem 2rem;
-    text-transform: none;
-    font-size: 1.9rem;
-    width: 25rem;
+.button-container {
+  margin-top: 1.2rem;
+
+  .login-button {
+    margin-top: 1.7rem;
+    & button {
+      padding: 1rem 2rem;
+      text-transform: none;
+      font-size: 1.9rem;
+      width: 28rem;
+    }
   }
 }
